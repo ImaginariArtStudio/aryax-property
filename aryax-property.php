@@ -53,9 +53,11 @@ register_deactivation_hook(ARYAXPROPERTY_DIR, "desactivar_aryaxproperty");
 require_once ARYAXPROPERTY_PLUGIN_DIR . '/admin/menu-admin.php';
 
 function activar_aryaxproperty(){
-
+	require_once ARYAXPROPERTY_PLUGIN_DIR . '/admin/functions/aryax-db.php';
+	aryax_create_db_inmuebles();
 }
 
 function desactivar_aryaxproperty(){
-
+	require_once ARYAXPROPERTY_PLUGIN_DIR . '/admin/functions/aryax-db.php';
+	aryax_delet_inmu();
 }
