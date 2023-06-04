@@ -46,6 +46,15 @@ function agregar_submenu() {
         'Herramientas', // Slug del submenú
         'aryax_tools' // Función de devolución de llamada para mostrar la página del submenú
     );
+    add_submenu_page(
+        'Aryax-Property-Dashboard', // Slug de la página principal
+        'Licencia', // Título de la página
+        'Licencia', // Título del menú
+        'manage_options', // Capacidad requerida para acceder a la página
+        'Licencia', // Slug del submenú
+        'aryax_licencia' // Función de devolución de llamada para mostrar la página del submenú
+    );
 }
 
 require_once ARYAXPROPERTY_PLUGIN_DIR  . '/admin/pages/dashboard.php';
+require_once ARYAXPROPERTY_PLUGIN_DIR  . '/admin\pages\tokens-simi.php';

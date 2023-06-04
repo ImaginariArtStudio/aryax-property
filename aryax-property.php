@@ -55,9 +55,58 @@ require_once ARYAXPROPERTY_PLUGIN_DIR . '/admin/menu-admin.php';
 function activar_aryaxproperty(){
 	require_once ARYAXPROPERTY_PLUGIN_DIR . '/admin/functions/aryax-db.php';
 	aryax_create_db_inmuebles();
+	aryax_create_db();
 }
 
 function desactivar_aryaxproperty(){
 	require_once ARYAXPROPERTY_PLUGIN_DIR . '/admin/functions/aryax-db.php';
 	aryax_delet_inmu();
 }
+
+function aryax_librerias($hook){
+	
+	echo "<script> console.log('$hook')</script>";
+	if($hook != "aryax-property_page_Integraciones" && $hook != "toplevel_page_Api-Dashboard" && $hook != "api-gateway_page_aryax-plugin-endpoint"){
+		return;
+	}
+    wp_enqueue_script('bootstrapjs', plugins_url('includes/librerias/bootstrap-4/js/bootstrap.bundle.min.js',__FILE__),array('jquery'));
+    wp_enqueue_style('bootstrapcss', plugins_url('includes/librerias/bootstrap-4/css/bootstrap.min.css',__FILE__));
+	wp_enqueue_script('aryax-apigateway-js', plugins_url('includes/js/aryax-apigateway.js',__FILE__),array('jquery'));
+	wp_enqueue_style('aryaxcss', plugins_url('includes/css/aryaxapigateway.css',__FILE__));
+	wp_enqueue_style('maya-css', plugins_url('includes/css/mayagrip-min.css',__FILE__));
+	wp_enqueue_script('jquery'); 
+}
+add_action('admin_enqueue_scripts', 'aryax_librerias');
+
+function aryax_librerias_tokens($hook){
+	//echo "<script> console.log('$hook')</script>";
+	if($hook != "aryax-property_page_Integraciones"){
+		return;
+	}
+	wp_enqueue_script('aryax-tokens-js', plugins_url('includes/js/aryax-tokens.js',__FILE__),array('jquery'));
+	
+	wp_localize_script('aryax-tokens-js','SolicitudesAjax',[
+        'url' => admin_url('admin-ajax.php'),
+        'seguridad' => wp_create_nonce('seg')
+    ]);
+
+}
+add_action('admin_enqueue_scripts', 'aryax_librerias_tokens');
+
+
+//ajax
+
+function EliminarToken(){
+    $nonce = $_POST['nonce'];
+    if(!wp_verify_nonce($nonce, 'seg')){
+        die('no tiene permisos para ejecutar ese ajax');
+    }
+
+    $id = $_POST['id'];
+    global $wpdb;
+    $tabla = "{$wpdb->prefix}aryax_tokens";
+    $wpdb->delete($tabla,array('id' =>$id));
+     return true;
+}
+
+add_action('wp_ajax_peticioneliminar','EliminarToken');

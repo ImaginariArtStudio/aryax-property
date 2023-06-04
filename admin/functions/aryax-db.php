@@ -3,6 +3,20 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly.
 }
 
+function aryax_create_db(){
+  global $wpdb;
+
+  $sql = "CREATE TABLE IF NOT EXISTS {$wpdb->prefix}aryax_tokens(  
+          `id` INT NOT NULL AUTO_INCREMENT,
+          `idinmo` VARCHAR(50) NULL,
+          `token` VARCHAR(100) NULL,
+          `nombre` VARCHAR(45) NULL,
+          `crm` VARCHAR(45) NULL,
+          PRIMARY KEY (`id`));";
+          $wpdb->query($sql);
+
+}
+
 function aryax_create_db_inmuebles(){
     global $wpdb;
     $sql = "CREATE TABLE IF NOT EXISTS {$wpdb->prefix}aryax_propiedades(
@@ -51,4 +65,6 @@ function aryax_delet_inmu(){
 	global $wpdb;
 	$sql = "DROP TABLE {$wpdb->prefix}aryax_propiedades;";
 	$wpdb->query($sql);
+  $sql2 = "DROP TABLE {$wpdb->prefix}aryax_tokens;";
+	$wpdb->query($sql2);
 }

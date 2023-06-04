@@ -2,7 +2,7 @@
 if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly.
 }
-
+require_once ARYAXPROPERTY_PLUGIN_DIR . '/admin/pages/licencia.php';
 function aryaxdashboard(){ ?>
     <div class="wrap">
 		<div class="content-maya">
@@ -13,23 +13,12 @@ function aryaxdashboard(){ ?>
 <?php
 }
 
-function aryax_propiedades(){ ?>
-    <div class="wrap">
-		<div class="content-maya">
- Propiedades
-		</div>
-	</div>
-<?php
+function aryax_propiedades(){ 
+	require_once ARYAXPROPERTY_PLUGIN_DIR . '/admin/pages/crearpropiedad.php';
+
 }
 
-function aryax_integraciones(){ ?>
-    <div class="wrap">
-		<div class="content-maya">
- Propiedades
-		</div>
-	</div>
-<?php
-}
+
 
 function aryax_tools(){ ?>
     <div class="wrap">
